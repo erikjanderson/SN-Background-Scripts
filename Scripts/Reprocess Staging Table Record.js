@@ -1,6 +1,6 @@
-var table = 'x_itsp_its_jamf_staging_cmdb_computers';
-var sysId = '0cbba290870bc11061b98409cebb35b1';
-var scope = 'b1716227dbfb1300c9267b5b8c961969';
+var table = '';
+var sysId = '';
+var scope = '';
 
 var stagingGr = new GlideRecord(table);
 var columns = getColumns();
