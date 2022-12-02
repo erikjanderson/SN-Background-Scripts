@@ -1,7 +1,7 @@
 var versionOverride = '';
+var applicationId = '';
 var appGr = new GlideRecord('sys_app');
-appGr.get('e4fa5b632f343010a8ce2b5df699b69a');
-if (appGr) {
+if (appGr.get(applicationId)) {
     var changedFiles = getChangedRecords(appGr, versionOverride);
     var report = reportChangedFiles(changedFiles);
 
