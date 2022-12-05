@@ -9,3 +9,13 @@ gs.setProperty('glide.ui.session_timeout', 1440);
 
 //Removes warning when changes are made to a record that synced up with source control
 gs.setProperty('glide.ui.vcs.collision_avoidance', false);
+
+
+//Activate plugins
+var plugins = [];
+plugins.push('com.glide.hub.integrations.enterprise');
+var main = new GlideMultiPluginManagerWorker();
+main.setPluginIds(plugins);
+main.setProgressName("Plugin Installer");
+main.setBackground(true);
+main.start();
