@@ -14,6 +14,7 @@ gs.setProperty('glide.ui.vcs.collision_avoidance', false);
 //Activate plugins
 var plugins = [];
 plugins.push('com.glide.hub.integrations.enterprise');
+plugins.push('sn_sg_dependencie');
 var main = new GlideMultiPluginManagerWorker();
 main.setPluginIds(plugins);
 main.setProgressName("Plugin Installer");
