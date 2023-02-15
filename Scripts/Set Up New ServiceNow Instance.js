@@ -27,6 +27,8 @@ grBAC.insert();
 var plugins = [];
 plugins.push('com.glide.hub.integrations.enterprise');
 plugins.push('sn_sg_dependencies');
+plugins.push('com.snc.software_asset_management');
+plugins.push('com.snc.sams');
 var main = new GlideMultiPluginManagerWorker();
 main.setPluginIds(plugins);
 main.setProgressName("Plugin Installer");
