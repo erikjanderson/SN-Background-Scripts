@@ -10,6 +10,11 @@ gs.setProperty('glide.ui.session_timeout', 1440);
 //Removes warning when changes are made to a record that synced up with source control
 gs.setProperty('glide.ui.vcs.collision_avoidance', false);
 
+//Allows userse to individually choose if they want to opt into the Next Experience UI
+gs.setProperty('glide.ui.polaris.experience', false);
+gs.setProperty('glide.ui.polaris.dark_themes_enabled', true);
+gs.setProperty('glide.ui.polaris.on_off_user_pref_enabled', true);
+
 
 //Create a basic auth profile so i can import all of my existing work
 var githubUserName = '';
