@@ -14,7 +14,7 @@ gs.setProperty('glide.ui.vcs.collision_avoidance', false);
 gs.setProperty('glide.ui.polaris.experience', true);
 gs.setProperty('glide.ui.polaris.dark_themes_enabled', true);
 gs.setProperty('glide.ui.polaris.on_off_user_pref_enabled', true);
-gs.setProperty('glide.ui.polaris.use', false);
+//gs.setProperty('glide.ui.polaris.use', false);
 
 
 //Allow Polaris UI when in studio
