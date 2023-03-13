@@ -17,6 +17,19 @@ gs.setProperty('glide.ui.polaris.on_off_user_pref_enabled', true);
 gs.setProperty('glide.ui.polaris.use', false);
 
 
+//Allow Polaris UI when in studio
+
+var pageThemeGr = new GlideRecord('sys_page_theme');
+if(!pageThemeGr.get('name', '$studio')){
+    pageThemeGr.initialize();
+    pageThemeGr.type = 'page';
+    pageThemeGr.name = '$studio';
+    pageThemeGr.action = 'allow';
+    pageThemeGr.sys_scope = 'global';
+    pageThemeGr.insert();
+}
+
+
 //Create a basic auth profile so i can import all of my existing work
 var githubUserName = '';
 var githubAccessToken = ''
