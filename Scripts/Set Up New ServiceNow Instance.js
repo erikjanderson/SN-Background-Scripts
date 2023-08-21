@@ -44,8 +44,13 @@ grBAC.insert();
 
 //Activate plugins
 var plugins = [];
+//Integration Hub
 plugins.push('com.glide.hub.integrations.enterprise');
-plugins.push('sn_sg_dependencies');
+//Vulnerability Response
+plugins.push('com.snc.vulnerability');
+//Service Graph Connector Dependencies
+plugins.push('com.snc.sg.dependencies');
+//Software Asset Management
 plugins.push('com.snc.software_asset_management');
 plugins.push('com.snc.sams');
 var main = new GlideMultiPluginManagerWorker();
