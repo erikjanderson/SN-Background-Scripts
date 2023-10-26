@@ -3,7 +3,8 @@
     Author: Erik Anderson
     Description: Searches an applications metadata files and scans each column for a loose match on a search phrase.
 */
-var applicationId = "";
+var applicationId = gs.getCurrentApplicationId(); //Gets the current application your user session is in (regardless of what app scope this script runs in)
+//var applicationId = '';
 var searchPhrase = "";
 
 var outputString = "";
