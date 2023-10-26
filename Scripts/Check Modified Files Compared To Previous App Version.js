@@ -1,4 +1,5 @@
-var appId = ''
+var appId = gs.getCurrentApplicationId(); //Gets the current application your user session is in (regardless of what app scope this script runs in)
+//var appId = 'custom_app_id';
 var versionOverride = '';
 
 var appGr = new GlideRecord('sys_app');
