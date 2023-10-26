@@ -1,7 +1,7 @@
 /* 
-    Title: Ignore Local Changes On Remote Update Set (Bulk)
+    Title: Accept All Remote Changes (Bulk)
     Author: Erik Anderson
-    Description: Simple script designed to go through any update set conflicts and set the status to ignored
+    Description: Simple script designed to go through any update set conflicts and set the status to ignored (the same as clicking the "accept remote update" ui action)
 */
 
 var updateSetId = 'update_set_id'
