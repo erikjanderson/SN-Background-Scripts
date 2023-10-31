@@ -5,7 +5,8 @@
 */
 
 var uiListGr = new GlideRecord('sys_ui_list');
-uiListGr.addEncodedQuery("sys_user=562d4cca1b2be510b424caae6e4bcb74^sys_scope!=global^ORsys_scope=NULL");
+uiListGr.addQuery("sys_user", gs.getUserID());
+uiListGr.addEncodedQuery("sys_scope!=global^ORsys_scope=NULL");
 uiListGr.addQuery('sys_scope', '!=', 'global');
 uiListGr.addQuery('sys_user', gs.getUserID());
 uiListGr.query();
