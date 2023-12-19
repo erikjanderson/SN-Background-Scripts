@@ -1,5 +1,5 @@
 /* 
-    Title: Toggle IRERTE Stats
+    Title: Toggle IRE & RTE Performance Stats
     Author: Erik Anderson
     Description: If you face extremely slow run times for a robust transform, you can enable transaction stats for both the RTE and IRE.
 
