@@ -6,7 +6,6 @@
     After enabling the below system properties, you can view the stats in the below tables:
     IRE Pattern [sys_ire_pattern]
     RTE Pattern [sys_rte_pattern]
-
 */
 
 var ireStats = gs.getProperty('glide.identification_engine.ire_stats.enabled') == 'true';
