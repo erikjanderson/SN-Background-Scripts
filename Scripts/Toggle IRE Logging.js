@@ -1,5 +1,5 @@
 /* 
-    Title: Create Admin Accounts
+    Title: Toggle IRE Logging
     Author: Erik Anderson
     Description: Toggles on or off the glide.cmdb.logger.source.identification_engine system property.
     This system property is in the platform by default so it sometimes needs to be created in the global scope first.
