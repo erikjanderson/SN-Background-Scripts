@@ -19,12 +19,12 @@ if(ireStats === true){
     rteStats = true;
 }
 
-setProperty('glide.identification_engine.ire_stats.enabled', ireStats);
-setProperty('glide.robust_transform_engine.rte_stats.enabled', rteStats);
+upsertProperty('glide.identification_engine.ire_stats.enabled', ireStats);
+upsertProperty('glide.robust_transform_engine.rte_stats.enabled', rteStats);
 
 
 //Updates or inserts a system property
-function setProperty(propertyName, value){
+function upsertProperty(propertyName, value){
     var sysPropertiesGr = new GlideRecord('sys_properties');
     if(sysPropertiesGr.get('name', propertyName)){
         var existingValue = sysPropertiesGr.getValue('value');
