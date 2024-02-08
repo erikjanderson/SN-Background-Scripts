@@ -2,7 +2,7 @@
     Title: Create Admin Accounts
     Author: Erik Anderson
     Description: Creates user accounts based on the account info array and gives all users the admin and security admin role.
-                 NOTE: elevated permissions but be activated while running this script for security admin to be assigned.
+                 NOTE: elevated permissions must be activated while running this script for security admin to be assigned.
 */
 
 var accountInfo = [
