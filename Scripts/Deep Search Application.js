@@ -27,8 +27,7 @@ function run(scope, search) {
         for (var key in acutalRecord) {
             if (acutalRecord.getValue(key) && acutalRecord.getValue(key).toLowerCase().indexOf(search) > -1) {
                 resultCounts++;
-                outputString += "\n"+ table + ' : ' + gr.getDisplayValue() + ' : ' + gr.getUniqueValue() + '\n' + gr.getLink();
-                //gs.info(table + ' : ' + gr.getDisplayValue() + ' : ' + gr.getUniqueValue());
+                outputString += "\n\n"+ table + ' : ' + gr.getDisplayValue() + ' : ' + gr.getUniqueValue() + '\n' + acutalRecord.getLink();
             }
         }
     }
