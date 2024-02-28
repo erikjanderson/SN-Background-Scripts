@@ -22,6 +22,7 @@ main.start();
         IntegrationHub Enterprise - com.glide.hub.integrations.enterprise
         Software Asset Management - com.snc.software_asset_management
         Software Asset Management Foundation - com.snc.sams
+        Software Asset Managment Professional - com.snc.samp
         Column Level Encryption Enterprise - com.glide.now.platform.encryption
         
         Orchestration - com.snc.runbook_automation
