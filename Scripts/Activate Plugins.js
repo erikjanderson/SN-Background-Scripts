@@ -23,4 +23,6 @@ main.start();
         Software Asset Management - com.snc.software_asset_management
         Software Asset Management Foundation - com.snc.sams
         Column Level Encryption Enterprise - com.glide.now.platform.encryption
+        Orchestration - com.snc.runbook_automation
+        Client Software Distribution - com.snc.orchestration.client_sf_distribution
 */
