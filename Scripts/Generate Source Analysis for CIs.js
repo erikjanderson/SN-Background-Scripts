@@ -2,34 +2,47 @@
     Title: Generate Source Analysis for CIs
     Author: Erik Anderson
     Description: Analyzes a CI to determine which source(s) contributed to its creation. 
-    If verbose transformation is turned on, it will also be able to identify the staging rows that mapped to the CI.
+    If verbose transformation is turned on, it will also be able to identify the staging rows that mapped to this CI.
 */
 
 var reportString = "Configuration Item	Discovery Source	ID	Last Scan	Staging Table	Row ID";
 var ciGr = new GlideRecord("cmdb_ci");
-ciGr.addEncodedQuery("sys_id=123");
-
-
+ciGr.addEncodedQuery("discovery_source=SG-Example");
 ciGr.query();
 while(ciGr.next()){
     var ciSources = getSources(ciGr);
     for(var i = 0; i < ciSources.length; i++){
+        var idReportLineAdded = false;
         var source = ciSources[i];
         var discoverySource = source.discovery_source;
-        reportString += "\n=HYPERLINK(\""+ gs.getProperty('glide.servlet.uri') + ciGr.getLink() + "\", \"" + (ciGr.getDisplayValue() || ciGr.getUniqueValue()) + "\")" + "\t" + discoverySource;
+        var baseReportLine = "\n=HYPERLINK(\""+ gs.getProperty('glide.servlet.uri') + ciGr.getLink() + "\", \"" + (ciGr.getDisplayValue() || ciGr.getUniqueValue()) + "\")" + "\t" + discoverySource;
         for(var o = 0; o < source.ids.length; o++){
+            var tableReportLineAdded = false;
+            idReportLineAdded = true;
             var idObj = source.ids[o];
             var id = idObj.id;
             var lastScan = idObj.last_scan;
-            reportString += "\t" + id + "\t" + lastScan;
+            var idReportLine  = baseReportLine + "\t" + id + "\t" + lastScan;
             for(var stagingTable in idObj.staging_rows){
-                reportString += "\t" + stagingTable;
+                var stagingRowLineAdded = false;
+                tableReportLineAdded = true;
+                var tableReportLine = idReportLine + "\t" + stagingTable;
                 for (var s = 0; s < idObj.staging_rows[stagingTable].length; s++){
                     var stagingRowId = idObj.staging_rows[stagingTable][s];
-
-                    reportString += "\t=HYPERLINK(\"" + gs.getProperty('glide.servlet.uri') + stagingTable + ".do?sys_id=" +  stagingRowId + "\", \"" + "Hello" + "\")";
+                    var stagingRowReportLine = tableReportLine + "\t=HYPERLINK(\"" + gs.getProperty('glide.servlet.uri') + stagingTable + ".do?sys_id=" +  stagingRowId + "\", \"" + stagingRowId + "\")";
+                    reportString += stagingRowReportLine;
+                    stagingRowLineAdded = true;
+                }
+                if(!stagingRowLineAdded){
+                    reportString += tableReportLine;
                 }
             }
+            if(!tableReportLine){
+                reportString += idReportLine;
+            }
+        }
+        if(!idReportLineAdded){
+            reportString += baseReportLine;
         }
     }
 }
@@ -86,7 +99,7 @@ function getSources(ciGr) {
         }
         sources.push(sourceObj);
     }
-    gs.debug((JSON.stringify(sources)));
+   // gs.debug((JSON.stringify(sources)));
     return sources;
 }
 
