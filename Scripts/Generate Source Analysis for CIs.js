@@ -99,7 +99,7 @@ function getSources(ciGr) {
         }
         sources.push(sourceObj);
     }
-   // gs.debug((JSON.stringify(sources)));
+    gs.debug((JSON.stringify(sources)));
     return sources;
 }
 
