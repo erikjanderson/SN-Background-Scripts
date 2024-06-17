@@ -1,8 +1,8 @@
 
 /* 
-    Title: Get IRE Identifiers Entries
+    Title: Get IRE Related Entries
     Author: Erik Anderson
-    Description: Exports the the identification rules for a set list of tables to a CSV Attachment.
+    Description: Exports the Related Entries for a list of identifiers to a CSV Attachment.
     This helps with IRE analysis when getting understanding the impact of implementing new CMDB sources.
 */
 
@@ -30,6 +30,7 @@ CSV.prototype = {
 		for (var i = 0; i < this.headers.length; i++) {
 			var header = this.headers[i];
 			if (obj && !gs.nil(obj[header])) {
+                gs.info(header + ' ' + obj[header])
 				row[header] = obj[header];
 			} else if(!gs.nil(arguments[i]) && typeof arguments[i] != 'object'){
 				row[header] = arguments[i];
@@ -173,6 +174,7 @@ CSV.prototype = {
 	},
 
 	_buildCell: function(val){
+        gs.info(val)
         if(gs.nil(val)){
             val = "";
         }
@@ -204,8 +206,6 @@ CSV.prototype = {
 };
 
 
-
-
 var ireRules = [];
 
 for(var i = 0; i < ireTables.length; i++){
@@ -221,37 +221,21 @@ for(var i = 0; i < ireTables.length; i++){
             active: identifierGr.getValue('active') == "1",
             description: identifierGr.getValue('description'),
             independent: identifierGr.getValue('independent') == '1',
-            entries: [],
             related_entries: []
         }
 
-
-        var identifierEntryGr = new GlideRecord('cmdb_identifier_entry');
-        identifierEntryGr.addQuery('identifier', identifierGr.getUniqueValue());
-        identifierEntryGr.orderBy('order');
-        identifierEntryGr.query();
-        while (identifierEntryGr.next()) {
-            var identifierEntry = {
-                active: identifierEntryGr.getValue('active') == '1',
-                search_on_table: identifierEntryGr.getValue('table'),
-                attributes: identifierEntryGr.getValue('attributes'),
-                hybrid_entry_ci_criterion_attributes: identifierEntryGr.getValue('hybrid_entry_ci_criterion_attributes'),
-                priority: identifierEntryGr.getValue('order'),
-                allow_null_attribute: identifierEntryGr.getValue('allow_null_attribute') == '1',
-                optional_condition: identifierEntryGr.getValue('condition')
-            }
-            if(identifierEntry.search_on_table === tableName){
-                identifierEntry.type = "Primary";
-            }else if(identifierEntry.hybrid_entry_ci_criterion_attributes){
-                identifierEntry.type = "Hybrid";
-                identifierEntry.enforce_exact_count_match = identifierEntryGr.getValue('exact_count_match') == '1';
-            }else{
-                identifierEntry.type = "Lookup";
-                identifierEntry.enforce_exact_count_match = identifierEntryGr.getValue('exact_count_match') == '1';
-            }
-            ireRule.entries.push(identifierEntry);
+        var relatedEntryGr = new GlideRecord('cmdb_related_entry');
+        relatedEntryGr.addQuery('identifier', identifierGr.getUniqueValue());
+        relatedEntryGr.orderBy('order');
+        relatedEntryGr.query();
+        while(relatedEntryGr.next()){
+            ireRule.related_entries.push({
+                related_table: relatedEntryGr.getValue('table'),
+                reference_field: relatedEntryGr.getValue('referenced_field'),
+                criterion_attributes: relatedEntryGr.getValue('attributes'),
+                allow_null_attribute: relatedEntryGr.getValue('allow_null_attribute') == '1'
+            });
         }
-
 
         ireRules.push(ireRule)
     }
@@ -259,31 +243,33 @@ for(var i = 0; i < ireTables.length; i++){
 
 
 var csv = new CSV();
-csv.addHeader("Table Name", "Priority", "Entity Type", "Search on Table", "Attributes", "Enforce Exact Count", "Optional Condition", "Hybrid CI Criterion Attributes");
+csv.addHeader("Table Name", "Related Table", "Reference Field", "Criterion Attributes", "Allow Null Attributes");
 
 for(var i = 0; i < ireRules.length; i++){
     var identifier = ireRules[i];
+
+    if(i > 0) {
+        csv.addRow({})
+    }
 
     csv.addRow({
         "Table Name": identifier.table_name
     });
 
-    for(var e = 0; e < identifier.entries.length; e++){
-        var entry = identifier.entries[e];
-
+    for(var r = 0; r < identifier.related_entries.length; r++){
+        var relatedEntry = identifier.related_entries[r];
         csv.addRow({
-            "Priority": entry.priority,
-            "Entity Type": entry.type,
-            "Search on Table": entry.search_on_table,
-            "Attributes": entry.attributes,
-            "Enforce Exact Count": entry.enforce_exact_count_match,
-            "Optional Condition": entry.optional_condition,
-            "Hybrid CI Criterion Attributes": entry.hybrid_entry_ci_criterion_attributes
+            "Related Table": relatedEntry.related_table,
+            "Reference Field": relatedEntry.reference_field,
+            "Criterion Attributes": relatedEntry.criterion_attributes,
+            "Allow Null Attributes": relatedEntry.allow_null_attribute
         })
     }
 
-
 }
+
+gs.info(JSON.stringify(csv.rows))
+
 csv.build();
-var attachmentGr = csv.createAttachment("IRE Identification Rule Analysis");
+var attachmentGr = csv.createAttachment("IRE Related Entry Analysis");
 gs.info(attachmentGr.getLink())
