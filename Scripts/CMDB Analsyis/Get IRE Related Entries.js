@@ -30,7 +30,6 @@ CSV.prototype = {
 		for (var i = 0; i < this.headers.length; i++) {
 			var header = this.headers[i];
 			if (obj && !gs.nil(obj[header])) {
-                gs.info(header + ' ' + obj[header])
 				row[header] = obj[header];
 			} else if(!gs.nil(arguments[i]) && typeof arguments[i] != 'object'){
 				row[header] = arguments[i];
@@ -174,7 +173,6 @@ CSV.prototype = {
 	},
 
 	_buildCell: function(val){
-        gs.info(val)
         if(gs.nil(val)){
             val = "";
         }
@@ -268,7 +266,6 @@ for(var i = 0; i < ireRules.length; i++){
 
 }
 
-gs.info(JSON.stringify(csv.rows))
 
 csv.build();
 var attachmentGr = csv.createAttachment("IRE Related Entry Analysis");
