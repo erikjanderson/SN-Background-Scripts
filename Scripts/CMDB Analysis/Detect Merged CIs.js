@@ -7,7 +7,7 @@
 
 
 var discoverySource = "SG-Example";
-var array = [];
+//var array = [];
 new global.GlideQuery("sys_object_source")
     //.where("name", discoverySource)
     .aggregate("COUNT", "sys_id")
@@ -40,11 +40,12 @@ new global.GlideQuery("sys_object_source")
         
         for(discoverySource in obj.sources){
             if(Object.keys(obj.sources[discoverySource]).length > 1){
-                array.push(obj)
+                //array.push(obj)
+                gs.info("MERGED RECORD: " + JSON.stringify(obj.sources[discoverySource]));
                 break;
             }
         }
     })
 
-gs.info(JSON.stringify(array))
+//gs.info(JSON.stringify(array))
 
