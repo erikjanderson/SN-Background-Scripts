@@ -2,7 +2,7 @@
 /* 
     Title: Source Analysis Builder For Entities
     Author: Erik Anderson
-    Description: Scans the transform definition based on a list of entites specified in the entity list array. 
+    Description: Scans the transform definition based on a list of entities specified in the entity list array. 
                  Logs out a tab delimited string that can be pasted into an excel sheet.
 */
 
