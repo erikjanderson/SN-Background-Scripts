@@ -48,6 +48,7 @@ function getTargetEntities(){
     var entityGr = new GlideRecord('cmdb_inst_entity');
     entityGr.addQuery('sys_rte_eb_definition', transformDefinitionId)
     entityGr.addEncodedQuery('table!=NULL^relationship_type=NULL^path!=NULL');
+    entityGr.orderBy('sys_created_on');
     entityGr.query();
     while (entityGr.next()) {
        entityList.push({
