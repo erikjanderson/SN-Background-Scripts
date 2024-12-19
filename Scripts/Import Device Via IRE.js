@@ -7,7 +7,7 @@
 
 var discoverySource = "SG-Example";
 
-var data = {
+var payload = {
 	"items": [
 		{
 			"className": "cmdb_ci_computer",
