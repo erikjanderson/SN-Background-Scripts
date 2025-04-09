@@ -37,7 +37,10 @@ var options = {
 
 
 var input = JSON.stringify(payload);
+//Identify & Reconcile
 var output = sn_cmdb.IdentificationEngine.createOrUpdateCIEnhanced(discoverySource, input, options);
 
+//Identify Only (Simulation)
+//var output = sn_cmdb.IdentificationEngine.identifyCIEnhanced(discoverySource, input, options);
 
 gs.info(JSON.stringify(JSON.parse(output), null, 2));
