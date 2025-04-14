@@ -5,12 +5,28 @@
                  This is helpful for the summary page of the Source Analysis.
 */
 
-var transformDefinitionId = ""
-var relationships = getRelationshipInfo(transformDefinitionId);
-//gs.info(JSON.stringify(relationships))
+var applicationScopeId = '';
 
-excelReport(relationships)
+var rteDefinitionGr = getRTEDefinitions();
+while(rteDefinitionGr.next()){
+    
+    //var transformDefinitionId = ""
+    var relationships = getRelationshipInfo(rteDefinitionGr.getUniqueValue());
+    //gs.info(JSON.stringify(relationships))
+    gs.info("////////////////" + rteDefinitionGr.getValue("name") + "////////////////");
+    excelReport(relationships)
+    gs.info("////////////////////////////////////////////////////////////////////////");
+}
 
+
+
+
+function getRTEDefinitions(){
+    var rteDefinitionGr = new GlideRecord('cmdb_inst_application_feed');
+    rteDefinitionGr.addQuery("sys_scope", applicationScopeId)
+    rteDefinitionGr.query();
+    return rteDefinitionGr;
+}
 
 function getRelationshipInfo(definitionId){
     var returnArray = [];

@@ -10,7 +10,7 @@
 /////////////////////////////////////
 
 //Definition of the parent RTE transform which references all contained entities
-var transformDefinitionId = '';
+var applicationScopeId = '';
 
 //The max number of rows to search for sample data before giving up
 var searchLimit = 100;
@@ -19,29 +19,46 @@ var searchLimit = 100;
 //////////Processing Logic////////////
 //////////////////////////////////////
 
-
-
-var reportString = '\nNative File/Table' + '\t' +	'Native Column Header' + '\t' +	'Sample Data' + '\t' +	'NOW Table	NOW Attribute' + '\t' +	'Reference' + '\t' +	'Referenced	Invalid Value Check' + '\t' +	'Transform' + '\t' +	'Comments';
+var transformDefinitionId = '';
 var importEntityId = '';
 var importEntityTableName = ''
-var importEntityGr = searchForImportEntity();
-if(importEntityGr){
-    importEntityId = importEntityGr.getUniqueValue();
-    importEntityTableName = importEntityGr.getValue('table');
+var rteDefinitionGr = getRTEDefinitions();
+while(rteDefinitionGr.next()){
+    gs.info("////////////////" + rteDefinitionGr.getValue("name") + "////////////////");
+    transformDefinitionId = rteDefinitionGr.getUniqueValue();
+    reportSourceAnalysis();
+    gs.info("////////////////////////////////////////////////////////////////////////");
 }
 
 
-var entityList = getTargetEntities();
-//gs.info(JSON.stringify(entityList))
-for(var i = 0; i <entityList.length; i++){
-    var currentEntity = entityList[i];
-        var entityGr = getEntity(currentEntity.id)
-        var entity = getEntitySourceInfo(entityGr)
-        //gs.info(JSON.stringify(entity))
-        reportString = reportString + excelReportEntity(entity)
-}
-gs.info(reportString);
 
+function reportSourceAnalysis(){
+    var reportString = '\nNative File/Table' + '\t' +	'Native Column Header' + '\t' +	'Sample Data' + '\t' +	'NOW Table	NOW Attribute' + '\t' +	'Reference' + '\t' +	'Referenced	Invalid Value Check' + '\t' +	'Transform' + '\t' +	'Comments';
+    var importEntityGr = searchForImportEntity();
+    if(importEntityGr){
+        importEntityId = importEntityGr.getUniqueValue();
+        importEntityTableName = importEntityGr.getValue('table');
+    }
+    var entityList = getTargetEntities();
+    //gs.info(JSON.stringify(entityList))
+    for(var i = 0; i <entityList.length; i++){
+        var currentEntity = entityList[i];
+            var entityGr = getEntity(currentEntity.id)
+            var entity = getEntitySourceInfo(entityGr)
+            //gs.info(JSON.stringify(entity))
+            reportString = reportString + excelReportEntity(entity)
+    }
+    gs.info(reportString);
+}
+
+
+
+function getRTEDefinitions(){
+    var rteDefinitionGr = new GlideRecord('cmdb_inst_application_feed');
+    rteDefinitionGr.addQuery("sys_scope", applicationScopeId)
+    rteDefinitionGr.query();
+    return rteDefinitionGr;
+}
 
 function getTargetEntities(){
     var entityList = [];
@@ -478,3 +495,5 @@ function findValueInArray(index, stack, array){
         }
     }
 }
+
+
