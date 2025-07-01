@@ -6,7 +6,7 @@
 */
 
 var accountInfo = [
-    {'user_name': 'john.doe', 'first_name': 'John', 'last_name': 'Doe'},
+    {'user_name': 'john.doe', 'first_name': 'John', 'last_name': 'Doe', 'email': "john.doe@example.com"},
 ];
 
 var reportString = '';
