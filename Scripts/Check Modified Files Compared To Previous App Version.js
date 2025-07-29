@@ -191,21 +191,26 @@ function getLastAppVersion(appGr, versionOverride) {
     var versionGr = getVersions('sys_app', appGr.getUniqueValue());
     var lastSysUpdatedOn;
     var trace = false;
+	var versionList = [];
     while (versionGr.next()) {
         var xml = versionGr.getValue('payload');
         var versionObj = getObj(xml);
         if (versionObj) {
             var oldVersion = versionObj.version;
+			if(versionList.indexOf(oldVersion) == -1){
+				versionList.push(oldVersion);
+			}
             if (oldVersion == currentVersion) {
                 trace = true;
             }
             if (currentVersion != oldVersion && trace === true) {
-                return lastSysUpdatedOn;
-            } else {
+                trace = false;
+            } else if(trace === true){
                 lastSysUpdatedOn = versionObj.sys_updated_on;
             }
         }
     }
+	gs.info("Version List: " + JSON.stringify(versionList))
     return lastSysUpdatedOn;
 }
 
