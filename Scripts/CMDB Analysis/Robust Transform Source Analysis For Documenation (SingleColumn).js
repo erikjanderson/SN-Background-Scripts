@@ -3,6 +3,7 @@
     Author: Erik Anderson
     Description: Scans the transform definition based on a list of entities specified in the entity list array. 
                  Logs out a tab delimited string that can be pasted into an excel sheet or converted to documentation
+                 TODO: Either merge this into the original source analysis or clean up this thing its super bad..
 */
 
 /////////////////////////////////////
