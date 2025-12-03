@@ -8,17 +8,16 @@
 var accountInfo = [
     {'user_name': 'john.doe', 'first_name': 'John', 'last_name': 'Doe', 'email': "john.doe@example.com"},
 ];
-
 var reportString = '';
 var instanceURL = gs.getProperty('glide.servlet.uri');
 for(var i = 0; i < accountInfo.length; i++){
     var returnObj = createAccount(accountInfo[i]);
+    returnObj.randomPassword = updateAccountPassword(accountInfo[i]);
     if(returnObj && returnObj.userId){
         addRoleToUser(returnObj.userId, 'admin');
         addRoleToUser(returnObj.userId, 'security_admin');
     }
     reportString += '\n' + instanceURL + '\n' + accountInfo[i].user_name;
-
     if(returnObj.randomPassword){
         reportString += '\n' + returnObj.randomPassword;
     }
@@ -62,21 +61,27 @@ function createAccount(userObj){
     if(userGr.get('user_name', userObj.user_name)){
         returnObj.userId = userGr.getUniqueValue();
     }else{
-
-        var user = gs.getUser();
-        returnObj.randomPassword = SNC.PasswordPolicyEvaluator.generateUserPassword(userObj.user_name);
         //returnObj.randomPassword = GlideSecureRandomUtil.getSecureRandomString(12);
         userGr.initialize();
         var keys = Object.keys(userObj);
         for(var i = 0; i < keys.length; i++){
             userGr.setDisplayValue(keys[i], userObj[keys[i]]);
         }
-        userGr.setDisplayValue('user_password', returnObj.randomPassword);
-        userGr.setDisplayValue('password_needs_reset', true);
+        // userGr.setDisplayValue('user_password', returnObj.randomPassword);
+        // userGr.setDisplayValue('password_needs_reset', true);
         returnObj.userId = userGr.insert();
-        
     }
     return returnObj;    
 }
 
-
+function updateAccountPassword(userObj){
+    var randomPassword = SNC.PasswordPolicyEvaluator.generateUserPassword(userObj.user_name);
+    gs.info("TEST" + userObj.randomPassword);
+    var userGr = new GlideRecord('sys_user');
+    if(userGr.get("user_name", userObj.user_name)){
+        userGr.setDisplayValue('user_password', randomPassword);
+        userGr.setDisplayValue('password_needs_reset', true);
+        userGr.update()
+    }
+    return randomPassword;
+}
