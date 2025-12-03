@@ -62,7 +62,10 @@ function createAccount(userObj){
     if(userGr.get('user_name', userObj.user_name)){
         returnObj.userId = userGr.getUniqueValue();
     }else{
-        returnObj.randomPassword = GlideSecureRandomUtil.getSecureRandomString(12);
+
+        var user = gs.getUser();
+        returnObj.randomPassword = SNC.PasswordPolicyEvaluator.generateUserPassword(userObj.user_name);
+        //returnObj.randomPassword = GlideSecureRandomUtil.getSecureRandomString(12);
         userGr.initialize();
         var keys = Object.keys(userObj);
         for(var i = 0; i < keys.length; i++){
