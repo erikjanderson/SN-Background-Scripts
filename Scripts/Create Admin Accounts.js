@@ -6,7 +6,7 @@
 */
 
 var accountInfo = [
-    {'user_name': 'john.doe', 'first_name': 'John', 'last_name': 'Doe', 'email': "john.doe@example.com"},
+    {'user_name': 'ricardo.avalos', 'first_name': 'Ricardo', 'last_name': 'Avalos', 'email': "ricardo.avalos@corexcorp.com"},
 ];
 var reportString = '';
 var instanceURL = gs.getProperty('glide.servlet.uri');
@@ -29,7 +29,6 @@ gs.info(reportString);
 
 function addRoleToUser(userId, roleName){
     var roleId = getRole(roleName);
-    gs.info(roleId);
     if(!roleId || !userId){
         return;
     }
@@ -76,7 +75,6 @@ function createAccount(userObj){
 
 function updateAccountPassword(userObj){
     var randomPassword = SNC.PasswordPolicyEvaluator.generateUserPassword(userObj.user_name);
-    gs.info("TEST" + userObj.randomPassword);
     var userGr = new GlideRecord('sys_user');
     if(userGr.get("user_name", userObj.user_name)){
         userGr.setDisplayValue('user_password', randomPassword);
