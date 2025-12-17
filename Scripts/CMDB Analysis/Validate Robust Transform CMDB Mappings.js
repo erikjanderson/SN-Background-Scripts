@@ -5,6 +5,8 @@
  *              validates Configuration Item (CI) population correctness,
  *              and relationship populations as well.
  *              Used for automated QA of connectors to ensure proper data mapping.
+ * 
+ *              Copy logged out strings and copy them into a csv editor to review and report on the results.
  * @author Erik Anderson
  * @version 1.0
  * @date 2025-12-17
