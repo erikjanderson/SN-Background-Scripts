@@ -6,7 +6,7 @@
 */
 
 var accountInfo = [
-    {'user_name': 'ricardo.avalos', 'first_name': 'Ricardo', 'last_name': 'Avalos', 'email': "ricardo.avalos@corexcorp.com"},
+    {'user_name': 'john.doe', 'first_name': 'John', 'last_name': 'Doe', 'email': "john.doe@example.com"},
 ];
 var reportString = '';
 var instanceURL = gs.getProperty('glide.servlet.uri');
