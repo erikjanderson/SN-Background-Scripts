@@ -11,7 +11,7 @@
 /////////////////////////////////////
 
 //Definition of the parent RTE transform which references all contained entities
-var applicationScopeId = '';
+var applicationScopeId = gs.getCurrentApplicationId();
 
 //The max number of rows to search for sample data before giving up
 var searchLimit = 100;
@@ -32,27 +32,6 @@ while(rteDefinitionGr.next()){
 }
 
 
-
-function reportSourceAnalysis(){
-    var reportString = '\nNative File/Table' + '\t' +	'Native Column Header' + '\t' +	'Sample Data' + '\t' +	'NOW Table' + '\t' + 'NOW Attribute' + '\t' +	'Reference' + '\t' +	'Referenced	Invalid Value Check' + '\t' +	'Transform' + '\t' +	'Comments';
-    var importEntityGr = searchForImportEntity();
-    if(importEntityGr){
-        importEntityId = importEntityGr.getUniqueValue();
-        importEntityTableName = importEntityGr.getValue('table');
-    }
-    var entityList = getTargetEntities();
-    //gs.info(JSON.stringify(entityList))
-    for(var i = 0; i <entityList.length; i++){
-        var currentEntity = entityList[i];
-            var entityGr = getEntity(currentEntity.id)
-            var entity = getEntitySourceInfo(entityGr)
-            //gs.info(JSON.stringify(entity))
-            reportString = reportString + excelReportEntity(entity)
-    }
-   gs.info(reportString);
-}
-
-
 function reportFieldMappings(){
     var reportString = '\nTable' + '\t' +	'Source Property' + '\t' +	'Sample Data' + '\t' + 'ServiceNow Column' + '\t' +	'Reference Table'
     var importEntityGr = searchForImportEntity();
@@ -66,10 +45,10 @@ function reportFieldMappings(){
         var currentEntity = entityList[i];
             var entityGr = getEntity(currentEntity.id)
             var entity = getEntitySourceInfo(entityGr)
-            //gs.info(JSON.stringify(entity))
-            reportString = reportString + excelReportEntity(entity)
+            gs.info(JSON.stringify(entity))
+            //reportString = reportString + excelReportEntity(entity)
     }
-    gs.info(reportString);
+    //gs.info(reportString);
 }
 
 

@@ -6,3 +6,5 @@
 */
 
 gs.eventQueue("sn_appclient.check.for.update");
+new global.UpdateChecker().deleteAppManagerCache();
+new global.UpdateChecker().checkAvailableUpdates();
