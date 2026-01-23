@@ -39,9 +39,9 @@ new global.GlideQuery("sys_object_source")
             .forEach(function (sourceDetail) {
                 obj.target_table = sourceDetail.target_table;
                 obj.target_display = sourceDetail.target_sys_id$DISPLAY;
-                if(!gs.nil(obj.target_display)){
+                if (!gs.nil(obj.target_display)) {
                     var displaySplit = obj.target_display.split(":");
-                    if(!gs.nil(displaySplit[1])){
+                    if (!gs.nil(displaySplit[1])) {
                         obj.target_display = displaySplit[1].trim();
                     }
                 }
@@ -69,7 +69,7 @@ new global.GlideQuery("sys_object_source")
 
 /*
 Example Output
- {
+{
     "target_sys_id": "{GUID}",
     "sources": {
         "SG-example": {
@@ -119,13 +119,13 @@ if (reportAsCSV === true) {
 }
 
 
-function getMostRecentScan(sourceFeedArray){
+function getMostRecentScan(sourceFeedArray) {
     var currentGdt;
-    for(var i = 0; i < sourceFeedArray.length; i++){
+    for (var i = 0; i < sourceFeedArray.length; i++) {
         var lastScan = sourceFeedArray[i].last_scan;
-        if(!gs.nil(lastScan)){
+        if (!gs.nil(lastScan)) {
             var lastScanGDT = new GlideDateTime(lastScan);
-            if(gs.nil(currentGdt) || lastScanGDT.getNumericValue() > currentGdt.getNumericValue()){
+            if (gs.nil(currentGdt) || lastScanGDT.getNumericValue() > currentGdt.getNumericValue()) {
                 currentGdt = lastScanGDT;
             }
         }
