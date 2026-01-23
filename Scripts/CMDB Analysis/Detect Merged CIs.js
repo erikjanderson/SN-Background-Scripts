@@ -7,9 +7,21 @@
 
 
 var discoverySource = "SG-Example";
-//var array = [];
+var classHierarchy = "cmdb_ci_hardware";
+
+var outputArray = [];
+
+//Get target table hierarchy
+var tu = new TableUtils(classHierarchy);
+var tableHierarchy = tu.getTableExtensions(); 
+gs.include("j2js");
+var tableArray = j2js(tableHierarchy);
+tableArray.unshift(classHierarchy);
+
+//Begin merged device detection
 new global.GlideQuery("sys_object_source")
-    //.where("name", discoverySource)
+    .where("name", discoverySource)
+    .where("target_table", "IN", tableArray)
     .aggregate("COUNT", "sys_id")
     .groupBy("target_sys_id")
     .having("COUNT", "sys_id", ">", 1)
@@ -40,12 +52,12 @@ new global.GlideQuery("sys_object_source")
         
         for(discoverySource in obj.sources){
             if(Object.keys(obj.sources[discoverySource]).length > 1){
-                //array.push(obj)
-                gs.info("MERGED RECORD: " + JSON.stringify(obj.sources[discoverySource]));
+                outputArray.push(obj)
+                //gs.info("MERGED RECORD: " + JSON.stringify(obj.sources[discoverySource]));
                 break;
             }
         }
     })
 
-//gs.info(JSON.stringify(array))
+gs.info(JSON.stringify(outputArray))
 
