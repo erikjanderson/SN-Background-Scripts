@@ -118,7 +118,6 @@ if (reportAsCSV === true) {
     gs.info(JSON.stringify(outputArray));
 }
 
-
 function getMostRecentScan(sourceFeedArray) {
     var currentGdt;
     for (var i = 0; i < sourceFeedArray.length; i++) {
