@@ -1,4 +1,6 @@
 
+
+
 var tables = ['http_connection',"cmdb_ci_computer", "cmdb_ci_disk", "cmdb_ci_ip_address", "cmdb_ci_network_adapter", "sys_alias", "syslog_app_scope", "sys_data_source", "sysauto", "sys_script_include", "sys_db_object", "sys_hub_action", "sys_user_role", "sys_user_group", "cmdb_ire_data_source_rule"];
 var ops = ['read', 'write', 'create'];
 var output = {};
