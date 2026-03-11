@@ -8,7 +8,7 @@
  * Requires the IntegrationHub ETL plugin to be installed
  */
 
-var importSetSysId = "c2e6cbb1c3ab7a50fac7fb377d013188";
+var importSetSysId = "";
 var encodedQuery = "";
 var maxRows = -1;
 
