@@ -1,3 +1,20 @@
+/**
+ * Check Modified Files Compared To Previous App Version
+ *
+ * This script retrieves the current application scope (or an overridden scope via appId) and compares
+ * application file metadata changes since the previous application version.
+ *
+ * It builds a report of changed records from sys_metadata and outputs a tabular summary containing:
+ * - Updated On
+ * - Display
+ * - Table
+ * - State (NEW/UPDATE/DELETE)
+ * - Record link
+ * - Previous Version link
+ * - Compare link (if available)
+ *
+ * The script can also generate a CSV attachment with the same details.
+ */
 var appId = gs.getCurrentApplicationId(); //Gets the current application your user session is in (regardless of what app scope this script runs in)
 //var appId = 'custom_app_id';
 var versionOverride = '';
@@ -197,8 +214,12 @@ function getLastAppVersion(appGr, versionOverride) {
         var versionObj = getObj(xml);
         if (versionObj) {
             var oldVersion = versionObj.version;
+			var createdOn = versionObj.sys_updated_on;
 			if(versionList.indexOf(oldVersion) == -1){
-				versionList.push(oldVersion);
+				versionList.push({
+					version: oldVersion,
+					created_on: createdOn
+				});
 			}
             if (oldVersion == currentVersion) {
                 trace = true;
@@ -210,7 +231,7 @@ function getLastAppVersion(appGr, versionOverride) {
             }
         }
     }
-	gs.info("Version List: " + JSON.stringify(versionList))
+	gs.info("Version List: " + JSON.stringify(versionList, null, 4));
     return lastSysUpdatedOn;
 }
 
