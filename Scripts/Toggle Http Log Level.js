@@ -1,6 +1,6 @@
 /*
     Author: Erik Anderson
-    Description: Toggles the http log levels on the ServiceNow instance. 
+    Description: Toggles the http log levels on the ServiceNow instance and enables better debugging. 
     This allows you to view things like response bodies in the outbound http request table.
 */
 
